@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Trirong">
+    <style>
+        
+        body {
+            
+            font-family: "Trirong", serif;
+            
+            margin: 0px;
+
+            }
+         
+            
+            .con{
+                padding-top: 20px;
+                margin: 0px;
+                padding-bottom: 0px;
+                border: none;
+            }
+        .navbar{
+
+            
+            margin:auto;
+            width: 30%;
+            display: flex;
+            justify-content: space-evenly;
+            background-color: cadetblue;
+            border-radius: 25px;
+        }
+        .navbar>a{
+            text-decoration: none;
+            color: black;
+            
+            font-size: 18px;
+            
+            
+        }
+        a:hover{
+            opacity: 0.7;
+            text-decoration: underline;
+        }
+        
+    </style>
+    <title>Explanation</title>
+</head>
+<body>
+    <div class="con" style=" background-color: darkcyan;">
+        
+    <div class="navbar">
+        <a href=".\index.html">Home</a>
+        <a href=""style="text-decoration: underline;">Explanation</a>
+        <a href="https://github.com/Hannan2910/CAO-OS-BUID">Assignment</a>
+    </div>
+    
+    
+    <div class="intro">
+        <h1 style="text-align: center;margin-bottom: 0px;">Hannan Aamir</h1>
+        <b><p style="text-align: center;margin-top:0px;font-size: 18px;">Assignment Explanation</p></b>
+       
+    </div>
+    </div>
+    <div class="exp">
+        <h2>Intro</h2>
+        <div>
+            Making this OS was not easy at all.
+            But with The Help of the provided videos i was able to make the requires os.
+            <br>
+            This is a 64-bit operating system which write the word NUST with differents symbols
+        </div>
+        <h2>Tools</h2>
+        <ul>
+            <li>VS Code</li>
+            <li>Docker</li>
+            <li>Qemu</li>
+        </ul>
+        <h2>Installation</h2>
+        <ul>
+            <li>Install Visual Studio code it will help you in the programming aspect </li>
+            <li>If you are using linus you may not need docker but is neccessary for windows and mac</li>
+            <li>After intsalling Docker you will need to install wsl2 for a linux subsystem</li>
+            <li>Install Qemu to emulate your output. Add Qemu to your environment variables</li>
+        </ul>
+        <h2>Docker File</h2>
+        <div>
+            To make your docker image make a buildenv folder and make a docker file and then add the following code to it
+            <br>
+            <div style="width: 80%;margin: auto;background-color: lightgrey; color: red;">
+                FROM randomdude/gcc-cross-x86_64-elf
+                <br>
+                RUN apt-get update
+                <br>
+                RUN apt-get upgrade -y
+                <br>
+                RUN apt-get install -y nasm
+                <br>
+                RUN apt-get install -y xorriso
+                <br>
+                RUN apt-get install -y grub-pc-bin
+                <br>
+                RUN apt-get install -y grub-common
+                <br>
+                <br>
+                
+                VOLUME /root/env
+                <br>
+                WORKDIR /root/env
+                <br>
+            </div>
+            To create your docker image run the following code in power shell.
+            <p style="color: red;background-color: lightgrey;width: 80%;margin: auto;">
+                docker build buildenv -t myos-buildenv
+            </p>
+            And then to run this code to run the docker image.
+            <p style="color: red;background-color: lightgrey;width: 80%;margin: auto;">
+                docker run --rm -it -v "${pwd}:/root/env" myos-buildenv
+            </p>
+ 
+        </div>
+        <h2>Coding</h2>
+        Now we will discuss how the file and the code in them is used to make the os
+        <ul style="width: 60% ;margin: auto;background-color: lightgrey;">
+            <li>
+                /src
+                <ul>
+                    <li>
+                        /intf
+                        <ul>
+                           <li>print.h</li> 
+                        </ul>
+                    </li>
+                   <li>
+                       /impl
+                       <ul>
+                        <li>
+                           kernel
+                           <ul>
+                               <li>main.c</li>
+                           </ul> 
+                        </li>
+                        <li>
+                            /x86_64
+                            <ul>
+                                <li>
+                                    print.c
+                                </li>
+                                <li>
+                                    /boot
+                                    <ul>
+                                        <li>
+                                            header.asm
+                                        </li>
+                                        <li>
+                                            main.asm
+                                        </li>
+                                        <li>
+                                            main64.asm
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                       </ul>
+                   </li>
+                </ul>
+            </li>
+            <li>
+                \targets
+                <ul>
+                    <li>
+                        x86_64
+                        <ul>
+                            <li>
+                                linker.ld
+                            </li>
+                            <li>
+                                /iso
+                                <ul>
+                                    <li>
+                                        /boot
+                                        <ul>
+                                            <li>
+                                                /grub
+                                                <ul>
+                                                    <li>
+                                                        grub.cfg
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        .gitignore
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <div style="width: 80%; margin: auto;">
+            <h4>
+                header.asm
+            </h4>
+            Has data for bootloader
+            <h4>
+                main.asm
+            </h4>
+            Is the main file and has the code to make the base of the OS
+            <h4>
+                main64.asm
+            </h4>
+            Has code to covert into a 64-bit OS.
+            <h4>
+                linker.ld
+            </h4>
+            Linker File for the OS
+            <h4>
+                grub.cfg
+            </h4>
+            This file locates kernel bin
+            <h4>
+                main.c
+            </h4>
+            Will Contain the code which prints the output on screen
+            <h4>
+                print.h
+            </h4>
+            This contains functions used to print text.
+            <h4>
+                print.c
+            </h4>
+            Has functios of print.h and fixed display settings
+            <h4>
+                Makefile
+            </h4>
+            Has code to compile the os and generate the os iso file
+        </div>
+        <h2>
+            Final Commands
+        </h2>
+        Run the command in power shell
+        <p style="color: red;background-color: lightgrey;width: 80%;margin: auto;">
+            make build-x86_64
+        </p>
+        <br>
+        Then close the docker and run the qemu command
+        <p style="color: red;background-color: lightgrey;width: 80%;margin: auto;">
+            qemu-system-x86_64.exe -L "C:\Program Files\qemu" -cdrom dist/x86_64/kernel.iso
+        </p>
+        <h2>
+            OUTPUT
+        </h2>
+        <img  style="width: 80%; margin: auto;"src="./output.png" alt="">
+        <h2>
+            Errors
+        </h2>
+        <ul style="color: red;background-color: lightgrey;width: 80%;margin: auto;">
+            <li>
+                The error for installation of wsl2
+            </li>
+            <li>
+                The error for make build-x86_64 not found( mostly because of error in code)
+            </li>
+            <li>
+                Error for Qemu becuse it is not added to enviornment variables.
+            </li>
+        </ul>
+        <br><br>
+    </div>
+
+</body>
+</html>
